@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://dho0u20gbdxqi"]
+
+[ext_resource type="PackedScene" uid="uid://byque4w54oowj" path="res://player/player.tscn" id="1_80vhd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_80vhd"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_hjsbj"]
+sky_material = SubResource("ProceduralSkyMaterial_80vhd")
+
+[sub_resource type="Environment" id="Environment_cwqvt"]
+background_mode = 2
+sky = SubResource("Sky_hjsbj")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_umreq"]
+size = Vector3(15, 1, 15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_umreq"]
+albedo_color = Color(0.2627451, 0.58431375, 0.35686275, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_80vhd"]
+
+[node name="level" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cwqvt")
+
+[node name="floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor"]
+shape = SubResource("BoxShape3D_umreq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="floor"]
+transform = Transform3D(15, 0, 0, 0, 1, 0, 0, 0, 15, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_umreq")
+mesh = SubResource("BoxMesh_80vhd")
+
+[node name="player" parent="." instance=ExtResource("1_80vhd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5046685, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.57357645, 0.81915206, 0, -0.81915206, 0.57357645, 0, 4.8356957, 0)
+shadow_enabled = true
